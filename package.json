@@ -1,27 +1,32 @@
 {
-  "name": "palantir-be-service",
-  "version": "1.0.0",
-  "description": "rest api for palantir backend service",
-  "main": "server.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/muratdemirci/palantir-be.git"
-  },
-  "keywords": [
-    "express",
-    "nodejs",
-    "postgresql",
-    "rest",
-    "service"
-  ],
-  "author": "mordor idman yurdu (our hackathon team: murat, ugur, dogukan)",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/muratdemirci/palantir-be/issues"
-  },
-  "homepage": "https://github.com/muratdemirci/palantir-be#readme"
+    "name": "palantir-be-service",
+    "version": "1.0.0",
+    "description": "rest api for palantir backend service",
+    "main": "server.js",
+    "scripts": {
+        "start": "SET NODE_ENV=production && node server",
+        "dev": "nodemon server"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/muratdemirci/palantir-be.git"
+    },
+    "keywords": [
+        "express",
+        "nodejs",
+        "postgresql",
+        "rest",
+        "service"
+    ],
+    "author": "mordor idman yurdu (our hackathon team: murat, ugur, dogukan)",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/muratdemirci/palantir-be/issues"
+    },
+    "homepage": "https://github.com/muratdemirci/palantir-be#readme",
+    "dependencies": {
+        "dotenv": "^16.0.2",
+        "express": "^4.18.1",
+        "nodemon": "^2.0.20"
+    }
 }
