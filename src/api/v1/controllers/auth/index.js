@@ -2,6 +2,8 @@ const User = require('../../models/User')
 const asyncHandler = require('../../middleware/async')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
+const Logger = require('../../middleware/logger')
+const ErrorResponse = require('../../middleware/errorResponse')
 
 // @desc      Register user
 // @route     POST /api/v1/auth/register
@@ -19,9 +21,10 @@ exports.register = asyncHandler(async (req, res, next) => {
         Message: 'User registered successfully!',
         User: user,
       })
+      Logger.log('info', 'User registered successfully!')
     })
     .catch(function (err) {
-      Logger.log('Error:', `${JSON.stringify(err)}`)
+      Logger.log('error', `${JSON.stringify(err)}`)
       return next(new ErrorResponse('User could not registered!', 400))
     })
 })
@@ -40,7 +43,8 @@ exports.login = (req, res) => {
   })
     .then((user) => {
       if (!user) {
-        return res.status(404).send({ message: 'User Not found.' })
+        Logger.log('error', `'User Not found.'${JSON.stringify(user)}`)
+        return next(new ErrorResponse('User Not found.', 404))
       }
 
       const passwordIsValid = bcrypt.compareSync(
@@ -49,13 +53,11 @@ exports.login = (req, res) => {
       )
 
       if (!passwordIsValid) {
-        return res.status(401).send({
-          accessToken: null,
-          message: 'Invalid Password!',
-        })
+        Logger.log('error', 'Invalid Password!')
+        return next(new ErrorResponse('Invalid Password!', 401))
       } else {
         const token = jwt.sign({ id: user.id }, secret, {
-          expiresIn: 86400, // 24 hours
+          expiresIn: 86400, // save it for 24 hours
         })
 
         res.status(200).send({
@@ -64,9 +66,12 @@ exports.login = (req, res) => {
           email: user.email,
           accessToken: token,
         })
+
+        Logger.log('info', 'User successfully logged in')
       }
     })
     .catch((err) => {
-      res.status(500).send({ message: err.message })
+      Logger.log('error', JSON.stringify(err.message))
+      return next(new ErrorResponse(JSON.stringify(err.message), 500))
     })
 }
