@@ -1,6 +1,5 @@
 const express = require('express')
 const { register, login } = require('../../controllers/auth')
-const { checkDuplicateEmail } = require('../../middleware/auth')
 
 const router = express.Router()
 
