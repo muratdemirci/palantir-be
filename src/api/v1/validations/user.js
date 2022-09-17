@@ -4,7 +4,11 @@ const usrRegisterSchema = yup.object({
   body: yup.object({
     name: yup.string().min(3).max(25).required(),
     email: yup.string().email().required(),
-    password: yup.string().required('Please Enter your password'),
+    password: yup
+      .string()
+      .min(8)
+      .max(25)
+      .required('Please Enter your password'),
   }),
 })
 
