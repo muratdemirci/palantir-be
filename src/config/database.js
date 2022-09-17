@@ -28,4 +28,16 @@ const db = new Sequelize(
     }
 )
 
+const initializeDatabase = async () => {
+	try {
+		await db.authenticate();
+		console.log("Connection has been established successfully.");
+		await db.sync({ alter: true });
+	} catch (error) {
+		console.log(`Unable to connect to the database: ${error}`);
+	}
+};
+
+initializeDatabase();
+
 module.exports = db
