@@ -26,6 +26,9 @@ exports.register = asyncHandler(async (req, res, next) => {
     })
 })
 
+// @desc      Login user
+// @route     POST /api/v1/auth/login
+// @access    Public
 exports.login = (req, res) => {
   const { email } = req.body
   const secret = process.env.SECRET_KEY || 'mordoridmanyurdu'
