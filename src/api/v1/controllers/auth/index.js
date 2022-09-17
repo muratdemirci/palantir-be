@@ -13,8 +13,17 @@ exports.register = asyncHandler(async (req, res, next) => {
         email,
         password,
     })
+        .then(function (user) {
+            res.json({
+                Message: 'User created',
+                User: user,
+            })
+        })
+        .catch(function (err) {
+            console.log(err)
+        })
 
-    console.log(user)
+    // console.log(user)
 
     // TODO: send token response
 })
